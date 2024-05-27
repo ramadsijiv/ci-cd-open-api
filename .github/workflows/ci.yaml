@@ -27,6 +27,12 @@ jobs:
           ref: dev
           path: base
 
+      - name: List files in head directory
+        run: ls -R head
+
+      - name: List files in base directory
+        run: ls -R base
+
       - name: Run OpenAPI Diff (from HEAD revision)
         uses: mvegter/openapi-diff-action@v0.23.5
         with:
