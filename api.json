@@ -402,7 +402,7 @@
             "type": "string",
             "enum": [
               "network_error",
-              "forbidden"
+              "invalid_input"
             ]
           },
           "tags": {
