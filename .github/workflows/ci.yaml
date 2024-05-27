@@ -28,39 +28,7 @@ jobs:
           path: base
 
       - name: Run OpenAPI Diff (from HEAD revision)
-        uses: allenheltondev/detect-breaking-changes-action@v1
+        uses: mvegter/openapi-diff-action@v0.23.5
         with:
-          specFileName: api.json
-          format: json
-          breakingChangeTypes: |
-            removed-paths
-            schema-properties-removed
-            parameters-removed
-            schema-new-required-properties
-            schema-type-changed
-            schema-property-type-changed
-
-
-
-      # - name: Run OpenAPI Diff (from HEAD revision)
-      #   uses: mvegter/openapi-diff-action@v0.23.5
-      #   with:
-      #     head-spec: head/api.json
-      #     base-spec: base/api.json
-
-
-    #   - name: Compare OpenAPI Specs
-    #   id: diff
-    #   uses: oasdiff/oasdiff-action/breaking@main
-    #   with:
-    #     base: base/api.json
-    #     revision: head/api.json
-
-    # - name: Output Breaking Changes
-    #   if: steps.diff.outputs.result != ''
-    #   run: echo "${{ steps.diff.outputs.result }}"
-    #   continue-on-error: true
-
-    # - name: Fail if breaking changes are detected
-    #   if: steps.diff.outputs.result != ''
-    #   run: exit 1
+          head-spec: head/api.json
+          base-spec: base/api.json
