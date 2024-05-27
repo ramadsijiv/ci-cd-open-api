@@ -31,9 +31,8 @@ jobs:
         id: diff
         uses: oasdiff/oasdiff-action/breaking@main
         with:
-          old-spec: base/api.json
-          new-spec: head/api.json
-          format: markdown
+          base: base/api.json
+          revision: head/api.jsons
 
       - name: Output Breaking Changes
         if: steps.diff.outputs.result != ''
