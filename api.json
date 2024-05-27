@@ -401,8 +401,9 @@
           "error": {
             "type": "string",
             "enum": [
-              "network_error",
-              "invalid_input"
+              "already_registered",
+              "missing_header",
+              "payment_required"
             ]
           },
           "tags": {
