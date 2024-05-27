@@ -402,8 +402,7 @@
             "type": "string",
             "enum": [
               "already_registered",
-              "missing_header",
-              "payment_required"
+              "missing_header"
             ]
           },
           "tags": {
