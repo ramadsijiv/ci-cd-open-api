@@ -402,7 +402,8 @@
             "type": "string",
             "enum": [
               "already_registered",
-              "missing_header"
+              "missing_header",
+              "payment_required"
             ]
           },
           "tags": {
@@ -423,8 +424,7 @@
         "type": "object",
         "required": [
           "name",
-          "priority",
-          "tags"
+          "priority"
         ],
         "properties": {
           "name": {
