@@ -1,0 +1,24 @@
+name: Check Open API Changes
+on:
+  pull_request:
+    branches:
+      - dev
+      - main
+jobs:
+  api-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out head branch
+        uses: actions/checkout@v2
+        with:
+          path: head
+      - name: Check out main branch
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          path: base
+      - name: Run OpenAPI Diff (from HEAD revision)
+        uses: mvegter/openapi-diff-action@v0.23.5
+        with:
+          head-spec: head/spec/openapi.yaml
+          base-spec: base/spec/openapi.yaml

@@ -1,0 +1,22 @@
+{
+  "name": "open-api-research",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon --watch -e js  --exec \"npm run start\"",
+    "generate:ts": "rm -rf __generated__/api-ts && npx @openapitools/openapi-generator-cli generate -i api.json -g typescript-axios -o __generated__/api-ts --additional-properties=useSingleRequestParameter=true,enumPropertyNaming=UPPERCASE"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.13.4",
+    "nodemon": "^3.1.1"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "swagger-ui-express": "^5.0.0"
+  }
+}

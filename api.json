@@ -1,0 +1,450 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Todo List RESTful API",
+    "version": "1.0.0",
+    "description": "OpenAPI Todo List RESTful API - Learn Damar",
+    "termsOfService": "https://karirlab.co",
+    "contact": {
+      "name": "Damar Jati Sribantolo",
+      "email": "damarjipiz@gmail.com",
+      "url": "https://mail.google.com"
+    },
+    "license": {
+      "name": "APACHE 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.{env}.testdamar.com/api",
+      "description": "Todo List RESTful API",
+      "variables": {
+        "env": {
+          "default": "dev",
+          "description": "Server Environtment",
+          "enum": [
+            "dev",
+            "staging",
+            "prod"
+          ]
+        }
+      }
+    }
+  ],
+  "externalDocs": {
+    "description": "KarirLab",
+    "url": "https://karirlab.co"
+  },
+  "paths": {
+    "/v1/todolist": {
+      "get": {
+        "operationId": "getTodoList",
+        "security": [
+          {
+            "TodoListAuth": []
+          }
+        ],
+        "tags": [
+          "TodoList"
+        ],
+        "summary": "Get all Todo List",
+        "description": "Get all active todo list by default.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TodoListName"
+          },
+          {
+            "$ref": "#/components/parameters/TodoListIncludeDone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get todo list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayTodoList"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Example success get all todolist",
+                    "value": [
+                      {
+                        "id": "123",
+                        "name": "Belajar",
+                        "priority": 3,
+                        "tags": [
+                          "Belajar OpenAPI",
+                          "Belajar NodeJS"
+                        ]
+                      },
+                      {
+                        "id": "321",
+                        "name": "Kerja",
+                        "priority": 5,
+                        "tags": [
+                          "Resume Builder"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed delete todo list (not found)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "failed": {
+                    "description": "Failed delete todo list",
+                    "value": {
+                      "success": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createTodoList",
+        "security": [
+          {
+            "TodoListAuth": []
+          }
+        ],
+        "tags": [
+          "TodoList"
+        ],
+        "summary": "Create new Todo List",
+        "description": "Create new todo list to databse.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateTodoList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success create todo list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoList"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success create todo list",
+                    "value": {
+                      "id": "123",
+                      "name": "Belajar",
+                      "priority": 3,
+                      "tags": [
+                        "Belajar OpenAPI",
+                        "Belajar NodeJS"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed delete todo list (not found)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "failed": {
+                    "description": "Failed delete todo list",
+                    "value": {
+                      "success": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/todolist/{id}": {
+      "patch": {
+        "operationId": "updateTodoList",
+        "security": [
+          {
+            "TodoListAuth": []
+          }
+        ],
+        "tags": [
+          "TodoList"
+        ],
+        "summary": "Update existing Todo List",
+        "description": "Update existing todo list in database",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TodoListId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateTodoList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success update todo list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoList"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success create todo list",
+                    "value": {
+                      "id": "123",
+                      "name": "Belajar",
+                      "priority": 3,
+                      "tags": [
+                        "Belajar OpenAPI",
+                        "Belajar NodeJS"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed delete todo list (not found)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "failed": {
+                    "description": "Failed delete todo list",
+                    "value": {
+                      "success": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteTodoList",
+        "security": [
+          {
+            "TodoListAuth": []
+          }
+        ],
+        "tags": [
+          "TodoList"
+        ],
+        "summary": "Delete existing Todo List",
+        "description": "Delete existing todo list in database",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TodoListId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success delete todo list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success delete todo list",
+                    "value": {
+                      "success": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed delete todo list (not found)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "failed": {
+                    "description": "Failed delete todo list",
+                    "value": {
+                      "success": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "TodoListAuth": {
+        "description": "Authentication for Todo List RESTful API",
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    },
+    "parameters": {
+      "TodoListName": {
+        "name": "name",
+        "required": false,
+        "description": "filter todo list by name",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "nullable": true,
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "example": "Belajar"
+      },
+      "TodoListIncludeDone": {
+        "name": "include_done",
+        "required": false,
+        "description": "is include done todo list",
+        "in": "query",
+        "schema": {
+          "type": "boolean",
+          "nullable": true,
+          "default": false
+        }
+      },
+      "TodoListId": {
+        "name": "id",
+        "required": true,
+        "description": "todo list id for update",
+        "in": "path",
+        "schema": {
+          "type": "string",
+          "nullable": false,
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "example": "00000-0000-0000"
+      }
+    },
+    "schemas": {
+      "TodoList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ArrayTodoList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TodoList"
+        }
+      },
+      "CreateOrUpdateTodoList": {
+        "type": "object",
+        "required": [
+          "name",
+          "priority"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "priority": {
+            "type": "number",
+            "default": 1
+          },
+          "tags": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "example": {
+          "name": "Belajar",
+          "priority": 3,
+          "tags": [
+            "Belajar OpenAPI",
+            "Belajar NodeJS"
+          ]
+        }
+      }
+    }
+  }
+}
