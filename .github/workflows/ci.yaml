@@ -27,25 +27,25 @@ jobs:
           ref: dev
           path: base
 
-      - name: Run OpenAPI Diff (from HEAD revision)
-        uses: mvegter/openapi-diff-action@v0.23.5
+      - name: Compare OpenAPI Specs
+        id: diff
+        uses: oasdiff/oasdiff-action/breaking@main
         with:
-          head-spec: head/api.json
-          base-spec: base/api.json
+          old-spec: base/api.json
+          new-spec: head/api.json
+          format: markdown
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+      - name: Output Breaking Changes
+        if: steps.diff.outputs.result != ''
+        run: echo "${{ steps.diff.outputs.result }}"
+        continue-on-error: true
 
-      - name: Install openapi-diff
-        run: npm install -g @openapitools/openapi-diff
+      - name: Fail if breaking changes are detected
+        if: steps.diff.outputs.result != ''
+        run: exit 1
 
-      - name: Run OpenAPI Diff (Check Enum)
-        run: |
-          openapi-diff base/api.json head/api.json > result.txt
-          cat result.txt
-          if grep -q "enum" result.txt; then
-            echo "Breaking changes in enums detected"
-            exit 1
-          fi
+      # - name: Run OpenAPI Diff (from HEAD revision)
+      #   uses: mvegter/openapi-diff-action@v0.23.5
+      #   with:
+      #     head-spec: head/api.json
+      #     base-spec: base/api.json
