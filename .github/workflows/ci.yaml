@@ -12,13 +12,23 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: head
+
       - name: Check out main branch
+        if: github.event.pull_request.base.ref == 'main'
         uses: actions/checkout@v2
         with:
           ref: main
           path: base
+
+      - name: Check out dev branch
+        if: github.event.pull_request.base.ref == 'dev'
+        uses: actions/checkout@v2
+        with:
+          ref: dev
+          path: base
+
       - name: Run OpenAPI Diff (from HEAD revision)
         uses: mvegter/openapi-diff-action@v0.23.5
         with:
-          head-spec: head/spec/openapi.yaml
-          base-spec: base/spec/openapi.yaml
+          head-spec: api.json
+          base-spec: api.json
