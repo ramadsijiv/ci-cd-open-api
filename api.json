@@ -398,6 +398,13 @@
           "priority": {
             "type": "number"
           },
+          "error": {
+            "type": "string",
+            "enum": [
+              "network_error",
+              "forbidden"
+            ]
+          },
           "tags": {
             "type": "array",
             "items": {
