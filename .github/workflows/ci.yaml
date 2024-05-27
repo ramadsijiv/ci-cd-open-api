@@ -32,7 +32,7 @@ jobs:
         uses: oasdiff/oasdiff-action/breaking@main
         with:
           base: base/api.json
-          revision: head/api.jsons
+          revision: head/api.json
 
       - name: Output Breaking Changes
         if: steps.diff.outputs.result != ''
