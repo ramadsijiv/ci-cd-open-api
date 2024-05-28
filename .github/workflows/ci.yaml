@@ -27,27 +27,38 @@ jobs:
           ref: dev
           path: base
 
+      # - name: Run OpenAPI Diff (from HEAD revision)
+      #   uses: oasdiff/oasdiff-action/breaking@main
+      #   with:
+      #     base: head/api.json
+      #     revision: base/api.json
+      #     fail-on-diff: false
+      
+      # - name: Print and check for warnings and errors
+      #   run: |
+      #     echo "OpenAPI Diff Warnings:"
+      #     echo "${{ steps.oasdiff.outputs.warnings }}"
+      #     echo "OpenAPI Diff Errors:"
+      #     echo "${{ steps.oasdiff.outputs.errors }}"
+
+      #     if [ "${{ steps.oasdiff.outputs.has_warnings }}" == "true" ] || [ "${{ steps.oasdiff.outputs.has_errors }}" == "true" ]; then
+      #       exit 1
+      #     fi
+      #   shell: bash
+          
       - name: Run OpenAPI Diff (from HEAD revision)
-        uses: oasdiff/oasdiff-action/breaking@main
+        uses: mvegter/openapi-diff-action@v0.23.5
         with:
-          base: head/api.json
-          revision: base/api.json
-          fail-on-diff: false
+          head-spec: head/api.json
+          base-spec: base/api.json
+        continue-on-error: true
       
       - name: Print and check for warnings and errors
+        if: failure()
         run: |
-          echo "OpenAPI Diff Warnings:"
-          echo "${{ steps.oasdiff.outputs.warnings }}"
-          echo "OpenAPI Diff Errors:"
-          echo "${{ steps.oasdiff.outputs.errors }}"
-
-          if [ "${{ steps.oasdiff.outputs.has_warnings }}" == "true" ] || [ "${{ steps.oasdiff.outputs.has_errors }}" == "true" ]; then
-            exit 1
-          fi
+          echo "OpenAPI Diff found breaking changes:"
+          cat $GITHUB_WORKSPACE/oasdiff_output.log
+          exit 1
         shell: bash
-          
-      # - name: Run OpenAPI Diff (from HEAD revision)
-      #   uses: mvegter/openapi-diff-action@v0.23.5
-      #   with:
-      #     head-spec: head/api.json
-      #     base-spec: base/api.json
+        env:
+          OASDIFF_OUTPUT: ${{ steps.oasdiff.outputs.error }}
