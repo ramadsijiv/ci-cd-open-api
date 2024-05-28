@@ -32,8 +32,19 @@ jobs:
         with:
           base: head/api.json
           revision: base/api.json
-          fail-on-diff: true
-          fail-on-warning: true
+          fail-on-diff: false
+      
+      - name: Test breaking changes action output
+        run: |
+          delimiter=$(cat /proc/sys/kernel/random/uuid | tr -d '-')
+          output=$(cat <<-$delimiter
+          ${{ steps.test_breaking_changes.outputs.breaking }}
+          $delimiter
+          )
+          if [ "$output" != "6 breaking changes: 2 error, 4 warning" ]; then
+            echo "Expected output '6 breaking changes: 2 error, 4 warning' but got '$output'" >&2
+            exit 1
+          fi
           
       # - name: Run OpenAPI Diff (from HEAD revision)
       #   uses: mvegter/openapi-diff-action@v0.23.5
