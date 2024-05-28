@@ -51,14 +51,3 @@ jobs:
         with:
           head-spec: head/api.json
           base-spec: base/api.json
-        continue-on-error: true
-      
-      - name: Print and check for warnings and errors
-        if: failure()
-        run: |
-          echo "OpenAPI Diff found breaking changes:"
-          cat $GITHUB_WORKSPACE/oasdiff_output.log
-          exit 1
-        shell: bash
-        env:
-          OASDIFF_OUTPUT: ${{ steps.oasdiff.outputs.error }}
