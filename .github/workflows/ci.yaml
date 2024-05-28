@@ -33,6 +33,7 @@ jobs:
           base: head/api.json
           revision: base/api.json
           fail-on-diff: true
+          fail-on-warning: true
           
       # - name: Run OpenAPI Diff (from HEAD revision)
       #   uses: mvegter/openapi-diff-action@v0.23.5
