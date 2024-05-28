@@ -34,17 +34,17 @@ jobs:
           revision: base/api.json
           fail-on-diff: false
       
-      - name: Test breaking changes action output
+      - name: Print and check for warnings and errors
         run: |
-          delimiter=$(cat /proc/sys/kernel/random/uuid | tr -d '-')
-          output=$(cat <<-$delimiter
-          ${{ steps.test_breaking_changes.outputs.breaking }}
-          $delimiter
-          )
-          if [ "$output" != "6 breaking changes: 2 error, 4 warning" ]; then
-            echo "Expected output '6 breaking changes: 2 error, 4 warning' but got '$output'" >&2
+          echo "OpenAPI Diff Warnings:"
+          echo "${{ steps.oasdiff.outputs.warnings }}"
+          echo "OpenAPI Diff Errors:"
+          echo "${{ steps.oasdiff.outputs.errors }}"
+
+          if [ "${{ steps.oasdiff.outputs.has_warnings }}" == "true" ] || [ "${{ steps.oasdiff.outputs.has_errors }}" == "true" ]; then
             exit 1
           fi
+        shell: bash
           
       # - name: Run OpenAPI Diff (from HEAD revision)
       #   uses: mvegter/openapi-diff-action@v0.23.5
