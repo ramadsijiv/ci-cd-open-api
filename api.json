@@ -388,6 +388,11 @@
     "schemas": {
       "TodoList": {
         "type": "object",
+        "required": [
+          "id",
+          "name",
+          "priority"
+        ],
         "properties": {
           "id": {
             "type": "string"
