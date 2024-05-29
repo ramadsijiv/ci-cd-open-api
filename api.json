@@ -403,7 +403,8 @@
             "enum": [
               "already_registered",
               "missing_header",
-              "payment_required"
+              "payment_required",
+              "not_found"
             ]
           },
           "tags": {
