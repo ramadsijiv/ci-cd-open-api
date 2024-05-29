@@ -73,7 +73,6 @@
                       {
                         "id": "123",
                         "name": "Belajar",
-                        "priority": 3,
                         "tags": [
                           "Belajar OpenAPI",
                           "Belajar NodeJS"
@@ -82,7 +81,6 @@
                       {
                         "id": "321",
                         "name": "Kerja",
-                        "priority": 5,
                         "tags": [
                           "Resume Builder"
                         ]
@@ -154,7 +152,6 @@
                     "value": {
                       "id": "123",
                       "name": "Belajar",
-                      "priority": 3,
                       "tags": [
                         "Belajar OpenAPI",
                         "Belajar NodeJS"
@@ -233,7 +230,6 @@
                     "value": {
                       "id": "123",
                       "name": "Belajar",
-                      "priority": 3,
                       "tags": [
                         "Belajar OpenAPI",
                         "Belajar NodeJS"
@@ -394,9 +390,6 @@
           },
           "name": {
             "type": "string"
-          },
-          "priority": {
-            "type": "number"
           },
           "error": {
             "type": "string",
