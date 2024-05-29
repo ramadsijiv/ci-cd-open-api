@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out head branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: head
 
       - name: Check out base branch
         if: github.event.pull_request.base.ref == 'main' || github.event.pull_request.base.ref == 'dev'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.base.ref }}
           path: base
