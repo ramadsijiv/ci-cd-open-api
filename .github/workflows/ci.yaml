@@ -33,7 +33,12 @@ jobs:
           base: base/api.json
           revision: head/api.json
           fail-on: ERR
-          include-checks: true
+          include-checks: 
+            - api-operation-id-removed
+            - api-schema-removed
+            - request-body-enum-value-removed
+            - response-mediatype-enum-value-remove
+            - response-property-enum-value-removed
           include-path-params: true
           composed: false
           output-to-file: ./oasdiff-diff
