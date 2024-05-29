@@ -36,11 +36,11 @@ jobs:
           format: json
           include-path-params: false
           composed: false
-          output-to-file: /oasdiff-diff
+          output-to-file: ./oasdiff-diff
 
       - name: Display diff result for debugging
         if: always()
-        run: cat oasdiff-diff.json
+        run: cat ./oasdiff-diff
           
       # - name: Run OpenAPI Diff (from HEAD revision)
       #   uses: mvegter/openapi-diff-action@v0.23.5
