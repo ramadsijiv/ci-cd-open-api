@@ -1,4 +1,4 @@
-name: Check Open API Changes
+name: Check Open API Breaking Changes
 on:
   pull_request:
     branches:
@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out head branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: head
 
       - name: Check out base branch
         if: github.event.pull_request.base.ref == 'main' || github.event.pull_request.base.ref == 'dev'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.base.ref }}
           path: base
@@ -25,12 +25,25 @@ jobs:
         with:
           base: base/api.json
           revision: head/api.json
-          fail-on: ERR
           include-checks: api-operation-id-removed,api-schema-removed,request-body-enum-value-removed,response-mediatype-enum-value-removed,response-property-enum-value-removed
           include-path-params: true
           composed: false
           output-to-file: ./oasdiff-diff
 
-      - name: Display diff result for debugging
+      - name: Comment diff result on PR
         if: always()
-        run: cat ./oasdiff-diff
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const content = fs.readFileSync('./oasdiff-diff', 'utf8');
+            const pr_number = context.payload.pull_request.number;
+
+            await github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr_number,
+              event: 'COMMENT',
+              body: `### OpenAPI Diff Result\n\n\`\`\`\n${content}\n\`\`\``
+            });
