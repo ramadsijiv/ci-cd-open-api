@@ -37,13 +37,19 @@ jobs:
           script: |
             const fs = require('fs');
             const content = fs.readFileSync('./oasdiff-diff', 'utf8');
-            const issue_number = context.issue.number;
 
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issue_number,
-              body: `### OpenAPI Diff Result\n\n\`\`\`\n${content}\n\`\`\``
-            });
+            console.log(context.repo.owner,"context.repo.owner")
+            console.log(content,"content")
+            console.log(context.payload.pull_request,"context.payload.pull_request")
+            console.log(github.rest.pulls,"github.rest.pulls")
 
             
+
+            
+
+# await github.rest.issues.createComment({
+#               owner: context.repo.owner,
+#               repo: context.repo.repo,
+#               issue_number: issue_number,
+#               body: `### OpenAPI Diff Result\n\n\`\`\`\n${content}\n\`\`\``
+#             });
