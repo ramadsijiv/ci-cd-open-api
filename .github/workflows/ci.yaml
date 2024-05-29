@@ -20,13 +20,6 @@ jobs:
           ref: ${{ github.event.pull_request.base.ref }}
           path: base
 
-      - name: Display directory structure for debugging
-        run: |
-          echo "HEAD directory structure:"
-          ls -R head
-          echo "BASE directory structure:"
-          ls -R base
-
       - name: Run OpenAPI Diff (from HEAD revision)
         uses: oasdiff/oasdiff-action/breaking@main
         with:

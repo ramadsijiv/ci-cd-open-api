@@ -424,8 +424,7 @@
         "type": "object",
         "required": [
           "name",
-          "priority",
-          "tags"
+          "priority"
         ],
         "properties": {
           "name": {
