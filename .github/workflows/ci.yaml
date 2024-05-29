@@ -5,7 +5,7 @@ on:
       - dev
       - main
 jobs:
-  api-diff:
+  open-api-diff:
     runs-on: ubuntu-latest
     steps:
       - name: Check out head branch
@@ -13,19 +13,19 @@ jobs:
         with:
           path: head
 
-      - name: Check out main branch
-        if: github.event.pull_request.base.ref == 'main'
+      - name: Check out base branch
+        if: github.event.pull_request.base.ref == 'main' || github.event.pull_request.base.ref == 'dev'
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: ${{ github.event.pull_request.base.ref }}
           path: base
 
-      - name: Check out dev branch
-        if: github.event.pull_request.base.ref == 'dev'
-        uses: actions/checkout@v2
-        with:
-          ref: dev
-          path: base
+      - name: Display directory structure for debugging
+        run: |
+          echo "HEAD directory structure:"
+          ls -R head
+          echo "BASE directory structure:"
+          ls -R base
 
       - name: Run OpenAPI Diff (from HEAD revision)
         uses: oasdiff/oasdiff-action/diff@main
@@ -36,18 +36,10 @@ jobs:
           format: json
           include-path-params: false
           composed: false
-      
-      # - name: Print and check for warnings and errors
-      #   run: |
-      #     echo "OpenAPI Diff Warnings:"
-      #     echo "${{ steps.oasdiff.outputs.warnings }}"
-      #     echo "OpenAPI Diff Errors:"
-      #     echo "${{ steps.oasdiff.outputs.errors }}"
 
-      #     if [ "${{ steps.oasdiff.outputs.has_warnings }}" == "true" ] || [ "${{ steps.oasdiff.outputs.has_errors }}" == "true" ]; then
-      #       exit 1
-      #     fi
-      #   shell: bash
+      - name: Display diff result for debugging
+        if: always()
+        run: cat oasdiff-diff.json
           
       # - name: Run OpenAPI Diff (from HEAD revision)
       #   uses: mvegter/openapi-diff-action@v0.23.5
