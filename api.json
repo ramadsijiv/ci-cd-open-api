@@ -423,17 +423,12 @@
       "CreateOrUpdateTodoList": {
         "type": "object",
         "required": [
-          "name",
-          "priority"
+          "name"
         ],
         "properties": {
           "name": {
             "type": "string",
             "minLength": 1
-          },
-          "priority": {
-            "type": "number",
-            "default": 1
           },
           "tags": {
             "type": "array",
