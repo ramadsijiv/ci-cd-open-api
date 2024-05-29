@@ -27,12 +27,12 @@ jobs:
           ref: dev
           path: base
 
-      # - name: Run OpenAPI Diff (from HEAD revision)
-      #   uses: oasdiff/oasdiff-action/breaking@main
-      #   with:
-      #     base: head/api.json
-      #     revision: base/api.json
-      #     fail-on-diff: false
+      - name: Run OpenAPI Diff (from HEAD revision)
+        uses: oasdiff/oasdiff-action/diff@main
+        with:
+          base: head/api.json
+          revision: base/api.json
+          fail-on-diff: false
       
       # - name: Print and check for warnings and errors
       #   run: |
@@ -46,8 +46,8 @@ jobs:
       #     fi
       #   shell: bash
           
-      - name: Run OpenAPI Diff (from HEAD revision)
-        uses: mvegter/openapi-diff-action@v0.23.5
-        with:
-          head-spec: head/api.json
-          base-spec: base/api.json
+      # - name: Run OpenAPI Diff (from HEAD revision)
+      #   uses: mvegter/openapi-diff-action@v0.23.5
+      #   with:
+      #     head-spec: head/api.json
+      #     base-spec: base/api.json
