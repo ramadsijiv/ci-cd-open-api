@@ -32,18 +32,13 @@ jobs:
         with:
           base: base/api.json
           revision: head/api.json
-          fail-on-diff: false
+          fail-on: ERR
           format: yaml
-          include-path-params: false
+          include-checks: true
+          include-path-params: true
           composed: false
           output-to-file: ./oasdiff-diff
 
       - name: Display diff result for debugging
         if: always()
         run: cat ./oasdiff-diff
-          
-      # - name: Run OpenAPI Diff (from HEAD revision)
-      #   uses: mvegter/openapi-diff-action@v0.23.5
-      #   with:
-      #     head-spec: head/api.json
-      #     base-spec: base/api.json
