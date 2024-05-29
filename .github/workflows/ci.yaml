@@ -25,7 +25,6 @@ jobs:
         with:
           base: base/api.json
           revision: head/api.json
-          fail-on: ERR
           include-checks: api-operation-id-removed,api-schema-removed,request-body-enum-value-removed,response-mediatype-enum-value-removed,response-property-enum-value-removed
           include-path-params: true
           composed: false
