@@ -1,4 +1,4 @@
-name: Check Open API Changes
+name: Check Open API Breaking Changes
 on:
   pull_request:
     branches:
