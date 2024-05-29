@@ -33,7 +33,7 @@ jobs:
           base: base/api.json
           revision: head/api.json
           fail-on-diff: false
-          format: json
+          format: yaml
           include-path-params: false
           composed: false
           output-to-file: ./oasdiff-diff
