@@ -30,6 +30,21 @@ jobs:
           composed: false
           output-to-file: ./oasdiff-diff
 
-      - name: Display diff result for debugging
+      - name: Comment diff result on PR
         if: always()
-        run: cat ./oasdiff-diff
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const path = './oasdiff-diff';
+            const content = fs.readFileSync(path, 'utf8');
+            const issue_number = context.payload.pull_request.number;
+            const repo = context.repo.repo;
+            const owner = context.repo.owner;
+            
+            await github.issues.createComment({
+              owner: owner,
+              repo: repo,
+              issue_number: issue_number,
+              body: `### OpenAPI Diff Result\n\n\`\`\`\n${content}\n\`\`\``
+            });
