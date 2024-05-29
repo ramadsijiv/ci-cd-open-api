@@ -33,7 +33,6 @@ jobs:
           base: base/api.json
           revision: head/api.json
           fail-on: ERR
-          format: yaml
           include-checks: true
           include-path-params: true
           composed: false
