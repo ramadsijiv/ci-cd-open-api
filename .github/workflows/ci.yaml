@@ -36,7 +36,7 @@ jobs:
           format: json
           include-path-params: false
           composed: false
-          output_to_file: /oasdiff-diff
+          output-to-file: /oasdiff-diff
 
       - name: Display diff result for debugging
         if: always()
