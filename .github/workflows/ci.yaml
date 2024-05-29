@@ -28,7 +28,7 @@ jobs:
           ls -R base
 
       - name: Run OpenAPI Diff (from HEAD revision)
-        uses: oasdiff/oasdiff-action/diff@main
+        uses: oasdiff/oasdiff-action/breaking@main
         with:
           base: base/api.json
           revision: head/api.json
